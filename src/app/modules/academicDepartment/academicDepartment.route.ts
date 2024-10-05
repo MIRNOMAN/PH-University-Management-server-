@@ -1,30 +1,51 @@
 import express from 'express';
-import { validateRequest } from '../../../middlewares/validateRequest';
-import { AcademicDepartmentValidation } from './academicDepartment.validation';
+
 import { AcademicDepartmentControllers } from './academicDepartment.controller';
+import { AcademicDepartmentValidation } from './academicDepartment.validation';
+import { USER_ROLE } from '../user/user.constant';
+import auth from '../../../middlewares/auth';
+import { validateRequest } from '../../../middlewares/validateRequest';
 
 const router = express.Router();
 
-//application router
-
 router.post(
   '/create-academic-department',
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
   validateRequest(
-    AcademicDepartmentValidation.createAcademicDepartmantValidationSchema,
+    AcademicDepartmentValidation.createAcademicDepartmentValidationSchema,
   ),
-  AcademicDepartmentControllers.createAcademicDepartment,
+  AcademicDepartmentControllers.createAcademicDepartmemt,
 );
 
-router.get('/', AcademicDepartmentControllers.getAllAcademicDepartment);
-
-router.get('/:id', AcademicDepartmentControllers.getAcademicDepartmentById);
+router.get(
+  '/:departmentId',
+  auth(
+    USER_ROLE.superAdmin,
+    USER_ROLE.admin,
+    USER_ROLE.faculty,
+    USER_ROLE.student,
+  ),
+  AcademicDepartmentControllers.getSingleAcademicDepartment,
+);
 
 router.patch(
-  '/:id',
+  '/:departmentId',
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
   validateRequest(
-    AcademicDepartmentValidation.updateAcademicDepartmantValidationSchema,
+    AcademicDepartmentValidation.updateAcademicDepartmentValidationSchema,
   ),
-  AcademicDepartmentControllers.updateAcademicDepartment,
+  AcademicDepartmentControllers.updateAcademicDeartment,
 );
 
-export const academicDepartmentRoute = router;
+router.get(
+  '/',
+  auth(
+    USER_ROLE.superAdmin,
+    USER_ROLE.admin,
+    USER_ROLE.faculty,
+    USER_ROLE.student,
+  ),
+  AcademicDepartmentControllers.getAllAcademicDepartments,
+);
+
+export const AcademicDepartmentRoutes = router;
