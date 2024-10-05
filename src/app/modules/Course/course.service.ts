@@ -1,7 +1,6 @@
 import httpStatus from 'http-status';
 import mongoose from 'mongoose';
 import QueryBuilder from '../../builder/QueryBuilder';
-
 import { TCourse, TCoursefaculty } from './course.interface';
 import { Course, CourseFaculty } from './course.model';
 import { CourseSearchableFields } from './course.constrant';
