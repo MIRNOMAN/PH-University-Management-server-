@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import { OfferedCourseServices } from './OfferedCourse.service';
 import { catchAsync } from '../../../utils/catchAsync';
-import { sendResponse } from '../../../utils/sendResponse';
+import sendResponse from '../../../utils/sendResponse';
 
 const createOfferedCourse = catchAsync(async (req: Request, res: Response) => {
   const result = await OfferedCourseServices.createOfferedCourseIntoDB(

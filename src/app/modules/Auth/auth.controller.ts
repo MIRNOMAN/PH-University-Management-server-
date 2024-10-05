@@ -2,8 +2,8 @@ import httpStatus from 'http-status';
 import config from '../../config';
 import { AuthServices } from './auth.service';
 import { catchAsync } from '../../../utils/catchAsync';
-import { sendResponse } from '../../../utils/sendResponse';
 import { AppError } from '../../errors/appError';
+import sendResponse from '../../../utils/sendResponse';
 
 const loginUser = catchAsync(async (req, res) => {
   const result = await AuthServices.loginUser(req.body);
