@@ -1,26 +1,27 @@
 import { Router } from 'express';
-import { studentRoute } from '../modules/student/student.route';
-import { userRoute } from '../modules/user/user.route';
-import { academicSemesterRoute } from '../modules/academicSemester/academicSemester.route';
-import { academicFscultyRoute } from '../modules/academicFaculty/academicFaculty.route';
-import { academicDepartmentRoute } from '../modules/academicDepartment/academicDepartment.route';
-import { FacultyRoutes } from '../modules/Faculty/faculty.route';
 import { AdminRoutes } from '../modules/Admin/admin.route';
-import { CourseRoutes } from '../modules/Course/course.route';
-import { semesterRegistrationRoutes } from '../modules/semesterRegistration/semesterRegistration.route';
-import { offeredCourseRoutes } from '../modules/OfferedCourse/OfferedCourse.route';
 import { AuthRoutes } from '../modules/Auth/auth.route';
+import { CourseRoutes } from '../modules/Course/course.route';
+import { EnrolledCourseRoutes } from '../modules/EnrolledCourse/enrolledCourse.route';
+import { FacultyRoutes } from '../modules/Faculty/faculty.route';
+import { offeredCourseRoutes } from '../modules/OfferedCourse/OfferedCourse.route';
+import { UserRoutes } from '../modules/user/user.route';
+import { StudentRoutes } from '../modules/student/student.route';
+import { AcademicSemesterRoutes } from '../modules/academicSemester/academicSemester.route';
+import { AcademicFacultyRoutes } from '../modules/academicFaculty/academicFaculty.route';
+import { AcademicDepartmentRoutes } from '../modules/academicDepartment/academicDepartment.route';
+import { semesterRegistrationRoutes } from '../modules/semesterRegistration/semesterRegistration.route';
 
 const router = Router();
 
 const moduleRoutes = [
   {
     path: '/users',
-    route: userRoute,
+    route: UserRoutes,
   },
   {
     path: '/students',
-    route: studentRoute,
+    route: StudentRoutes,
   },
   {
     path: '/faculties',
@@ -32,15 +33,15 @@ const moduleRoutes = [
   },
   {
     path: '/academic-semesters',
-    route: academicSemesterRoute,
+    route: AcademicSemesterRoutes,
   },
   {
     path: '/academic-faculties',
-    route: academicFscultyRoute,
+    route: AcademicFacultyRoutes,
   },
   {
     path: '/academic-departments',
-    route: academicDepartmentRoute,
+    route: AcademicDepartmentRoutes,
   },
   {
     path: '/courses',
@@ -57,6 +58,10 @@ const moduleRoutes = [
   {
     path: '/auth',
     route: AuthRoutes,
+  },
+  {
+    path: '/enrolled-courses',
+    route: EnrolledCourseRoutes,
   },
 ];
 
