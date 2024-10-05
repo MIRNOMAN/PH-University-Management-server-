@@ -3,16 +3,10 @@
 import httpStatus from 'http-status';
 import mongoose from 'mongoose';
 import config from '../../config';
-import AppError from '../../errors/AppError';
-import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
-import { AcademicDepartment } from '../AcademicDepartment/academicDepartment.model';
-import { AcademicSemester } from '../AcademicSemester/academicSemester.model';
 import { TAdmin } from '../Admin/admin.interface';
 import { Admin } from '../Admin/admin.model';
 import { TFaculty } from '../Faculty/faculty.interface';
 import { Faculty } from '../Faculty/faculty.model';
-import { TStudent } from '../Student/student.interface';
-import { Student } from '../Student/student.model';
 import { TUser } from './user.interface';
 import { User } from './user.model';
 import {
@@ -20,6 +14,12 @@ import {
   generateFacultyId,
   generateStudentId,
 } from './user.utils';
+import { TStudent } from '../student/student.interface';
+import { AcademicSemester } from '../academicSemester/academicSemester.model';
+import { AppError } from '../../errors/appError';
+import { AcademicDepartment } from '../academicDepartment/academicDepartment.model';
+import { sendImageToCloudinary } from '../../../utils/sendImageToCloudinary';
+import { Student } from '../student/student.model';
 
 const createStudentIntoDB = async (
   file: any,
