@@ -2,7 +2,7 @@ import { RequestHandler } from 'express';
 import httpStatus from 'http-status';
 import { StudentServices } from './student.service';
 import { catchAsync } from '../../../utils/catchAsync';
-import { sendResponse } from '../../../utils/sendResponse';
+import sendResponse from '../../../utils/sendResponse';
 
 const getSingleStudent = catchAsync(async (req, res) => {
   const { id } = req.params;
