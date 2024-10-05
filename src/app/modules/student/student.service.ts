@@ -1,9 +1,9 @@
 import httpStatus from 'http-status';
 import mongoose from 'mongoose';
+import QueryBuilder from '../../builder/QueryBuilder';
+import { studentSearchableFields } from './student.constant';
 import { TStudent } from './student.interface';
 import { Student } from './student.model';
-import { studentSearchableFields } from './student.constant';
-import QueryBuilder from '../../builder/QueryBuilder';
 import { AppError } from '../../errors/appError';
 import { User } from '../user/user.model';
 

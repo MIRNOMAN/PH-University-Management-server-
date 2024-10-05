@@ -1,6 +1,5 @@
 import { RequestHandler } from 'express';
 import httpStatus from 'http-status';
-
 import { StudentServices } from './student.service';
 import { catchAsync } from '../../../utils/catchAsync';
 import { sendResponse } from '../../../utils/sendResponse';
@@ -24,7 +23,7 @@ const getAllStudents: RequestHandler = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Student are retrieved succesfully',
-    // meta: result.meta,
+    meta: result.meta,
     data: result.result,
   });
 });

@@ -151,11 +151,11 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       ref: 'AcademicFaculty',
     },
   },
-  // {
-  //   toJSON: {
-  //     virtuals: true,
-  //   },
-  // },
+  {
+    toJSON: {
+      virtuals: true,
+    },
+  },
 );
 
 //virtual
