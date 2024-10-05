@@ -1,52 +1,66 @@
-import { AppError } from '../../errors/appError';
-import { academicSemsterCodeMapper } from './academicSemester.constrant';
+import QueryBuilder from '../../builder/QueryBuilder';
+import {
+  academicSemesterNameCodeMapper,
+  AcademicSemesterSearchableFields,
+} from './academicSemester.constrant';
+
 import { TAcademicSemester } from './academicSemester.interface';
 import { AcademicSemester } from './academicSemester.model';
 
 const createAcademicSemesterIntoDB = async (payload: TAcademicSemester) => {
-  if (academicSemsterCodeMapper[payload.name] !== payload.code) {
-    throw new AppError(404, 'Invalid semester code');
+  if (academicSemesterNameCodeMapper[payload.name] !== payload.code) {
+    throw new Error('Invalid Semester Code');
   }
+
   const result = await AcademicSemester.create(payload);
-
   return result;
 };
 
-const getAcademicSemestersFromDB = async () => {
-  const result = await AcademicSemester.find();
-  return result;
+const getAllAcademicSemestersFromDB = async (
+  query: Record<string, unknown>,
+) => {
+  const academicSemesterQuery = new QueryBuilder(AcademicSemester.find(), query)
+    .search(AcademicSemesterSearchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  const result = await academicSemesterQuery.modelQuery;
+  const meta = await academicSemesterQuery.countTotal();
+
+  return {
+    meta,
+    result,
+  };
 };
 
-const getAcademicSemesterByIdFromDB = async (id: string) => {
+const getSingleAcademicSemesterFromDB = async (id: string) => {
   const result = await AcademicSemester.findById(id);
-  if (!result) {
-    throw new AppError(404, 'Academic Semester not found');
-  }
   return result;
 };
 
-const updateAcademicSemesterInDB = async (
+const updateAcademicSemesterIntoDB = async (
   id: string,
   payload: Partial<TAcademicSemester>,
 ) => {
   if (
     payload.name &&
-    academicSemsterCodeMapper[payload.name] !== payload.code
+    payload.code &&
+    academicSemesterNameCodeMapper[payload.name] !== payload.code
   ) {
-    throw new AppError(404, 'Invalid semester code');
+    throw new Error('Invalid Semester Code');
   }
-  const result = await AcademicSemester.findByIdAndUpdate(id, payload, {
+
+  const result = await AcademicSemester.findOneAndUpdate({ _id: id }, payload, {
     new: true,
   });
-  if (!result) {
-    throw new AppError(404, 'Academic Semester not found');
-  }
   return result;
 };
 
 export const AcademicSemesterServices = {
   createAcademicSemesterIntoDB,
-  getAcademicSemestersFromDB,
-  getAcademicSemesterByIdFromDB,
-  updateAcademicSemesterInDB,
+  getAllAcademicSemestersFromDB,
+  getSingleAcademicSemesterFromDB,
+  updateAcademicSemesterIntoDB,
 };

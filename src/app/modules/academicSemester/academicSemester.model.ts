@@ -1,10 +1,10 @@
-import { model, Schema } from 'mongoose';
-import { TAcademicSemester } from './academicSemester.interface';
+import { Schema, model } from 'mongoose';
 import {
   AcademicSemesterCode,
   AcademicSemesterName,
   Months,
 } from './academicSemester.constrant';
+import { TAcademicSemester } from './academicSemester.interface';
 
 const acdemicSemesterSchema = new Schema<TAcademicSemester>(
   {
@@ -37,6 +37,7 @@ const acdemicSemesterSchema = new Schema<TAcademicSemester>(
     timestamps: true,
   },
 );
+
 acdemicSemesterSchema.pre('save', async function (next) {
   const isSemesterExists = await AcademicSemester.findOne({
     year: this.year,
@@ -53,3 +54,13 @@ export const AcademicSemester = model<TAcademicSemester>(
   'AcademicSemester',
   acdemicSemesterSchema,
 );
+
+// Name Year
+//2030 Autumn => Created
+// 2031 Autumn
+//2030 Autumn => XXX
+//2030 Fall => Created
+
+// Autumn 01
+// Summer 02
+// Fall 03
