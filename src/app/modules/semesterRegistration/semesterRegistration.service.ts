@@ -2,11 +2,11 @@
 import httpStatus from 'http-status';
 import mongoose from 'mongoose';
 import QueryBuilder from '../../builder/QueryBuilder';
-import { AcademicSemester } from '../academicSemester/academicSemester.model';
 import { TSemesterRegistration } from './semesterRegistration.interface';
 import { SemesterRegistration } from './semesterRegistration.model';
 import { RegistrationStatus } from './semesterRegistration.constraint';
 import { AppError } from '../../errors/appError';
+import { AcademicSemester } from '../academicSemester/academicSemester.model';
 import { OfferedCourse } from '../OfferedCourse/OfferedCourse.model';
 
 const createSemesterRegistrationIntoDB = async (
@@ -76,11 +76,16 @@ const getAllSemesterRegistrationsFromDB = async (
     .fields();
 
   const result = await semesterRegistrationQuery.modelQuery;
-  return result;
+  const meta = await semesterRegistrationQuery.countTotal();
+  return {
+    result,
+    meta,
+  };
 };
 
 const getSingleSemesterRegistrationsFromDB = async (id: string) => {
-  const result = await SemesterRegistration.findById(id);
+  const result =
+    await SemesterRegistration.findById(id).populate('academicSemester');
 
   return result;
 };
